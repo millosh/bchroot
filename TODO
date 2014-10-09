@@ -1,0 +1,1 @@
+* Add option to choose particular source for the package. Something like -p php:/path/to/php/source,nginx:/path/to/nginx/source
