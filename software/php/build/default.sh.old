@@ -1,0 +1,50 @@
+### exec_path = /sbin/php-fpm
+### pre_exec = pecl install apc memcache xdebug
+### pre_exec = cp -a /usr/lib/php*/20*/apc.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/memcache.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/xdebug.so ###CHROOT###/lib
+./configure \
+	--target=pentium4 \
+	--prefix=/srv/build/php \
+	--with-bz2 \
+	--with-cdb \
+	--with-curl \
+	--with-curlwrappers \
+	--with-gd \
+	--with-iconv \
+	--with-layout=GNU \
+	--with-mcrypt \
+	--with-mhash \
+	--with-mm \
+	--with-mysql \
+	--with-mysqli \
+	--with-openssl \
+	--with-pic \
+	--with-pcre-regex \
+	--with-pdo-mysql \
+	--with-pdo-sqlite \
+	--with-zlib \
+	--enable-bcmath \
+	--enable-dba \
+	--enable-fpm \
+	--enable-gd-native-ttf \
+	--enable-inline-optimization \
+	--enable-mbregex \
+	--enable-mbstring \
+	--enable-pdo \
+	--enable-pcntl \
+	--enable-shared \
+	--enable-shmop \
+	--enable-soap \
+	--enable-sockets \
+	--enable-sqlite-utf8 \
+	--enable-sysvsem \
+	--enable-sysvshm \
+	--enable-zip \
+	--disable-debug \
+	--disable-rpath \
+	--with-jpeg-dir \
+	--with-png-dir \
+	--with-freetype-dir \
+	--localstatedir=/var/run \
+	--with-config-file-path=/etc \

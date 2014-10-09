@@ -1,0 +1,93 @@
+### exec_path = /sbin/php-fpm
+### pre_exec = pecl install apc memcache xdebug
+### pre_exec = cp -a /usr/lib/php*/20*/apc.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/geoip.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/memcache.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/xdebug.so ###CHROOT###/lib
+export CFLAGS=-O2
+./configure  \
+	--disable-all \
+	--prefix=/srv/build/php \
+	--localstatedir=/var \
+	--with-config-file-path=/etc \
+	--with-bz2 \
+	--with-cdb \
+	--with-curl \
+	--with-curlwrappers \
+	--with-dom \
+	--with-dom-xslt \
+	--with-dom-exslt \
+	--with-expat-dir \
+	--with-fileinfo \
+	--with-flatfile \
+	--with-freetype-dir \
+	--with-gettext \
+	--with-gd \
+	--with-gmp \
+	--with-gnu-ld \
+	--with-iconv \
+	--with-iconv-dir \
+	--with-inifile \
+	--with-jpeg-dir \
+	--with-layout=GNU \
+	--with-libmbfl \
+	--with-libxml-dir \
+	--with-mcal \
+	--with-mcrypt \
+	--with-mhash \
+	--with-mime-magic \
+	--with-mm \
+	--with-mysql \
+	--with-mysqli \
+	--with-onig \
+	--with-openssl \
+	--with-pcre-regex \
+	--with-pdo-mysql \
+	--with-pear \
+	--with-png-dir \
+	--with-recode \
+	--with-sqlite \
+	--with-ttf \
+	--with-xml \
+	--with-xmlrpc \
+	--with-xsl \
+	--with-xsl \
+	--with-xslt-sablot \
+	--with-zip \
+	--with-zlib \
+	--enable-bcmath \
+	--enable-cli \
+	--enable-ctype \
+	--enable-dba \
+	--enable-dom \
+	--enable-fpm \
+	--enable-ftp \
+	--enable-gd-native-ttf \
+	--enable-htscanner \
+	--enable-inline-optimization \
+	--enable-intl \
+	--enable-libxml \
+	--enable-magic-quotes \
+	--enable-mbstr-enc-trans \
+	--enable-mbstring=all \
+	--enable-memory-limit \
+	--enable-mod-charset \
+	--enable-overload \
+	--enable-pdo \
+	--enable-posix \
+	--enable-shmop \
+	--enable-session \
+	--enable-soap \
+	--enable-sockets \
+	--enable-sqlite-utf8 \
+	--enable-standard \
+	--enable-tokenizer \
+	--enable-sysvmsg \
+	--enable-sysvsem \
+	--enable-sysvshm \
+	--enable-track-vars \
+	--enable-xml \
+	--enable-zip \
+	--enable-trans-sid \
+	--disable-debug \
+	--disable-ipv6 \

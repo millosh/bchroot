@@ -1,0 +1,41 @@
+### exec_path = /sbin/php-fpm
+### pre_exec = pecl install apc memcache xdebug
+### pre_exec = cp -a /usr/lib/php*/20*/apc.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/geoip.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/memcache.so ###CHROOT###/lib
+### pre_exec = cp -a /usr/lib/php*/20*/xdebug.so ###CHROOT###/lib
+export CFLAGS=-O2
+./configure  \
+	--disable-all \
+	--localstatedir=/var \
+	--with-config-file-path=/etc \
+	--with-bz2 \
+	--with-cdb \
+	--with-curl \
+	--with-curlwrappers \
+	--with-iconv \
+	--with-layout=GNU \
+	--with-mcrypt \
+	--with-mhash \
+	--with-mm \
+	--with-openssl \
+	--with-pcre-regex \
+	--with-xsl \
+	--with-zlib \
+	--enable-bcmath \
+	--enable-dba \
+	--enable-dom \
+	--enable-fpm \
+	--enable-inline-optimization \
+	--enable-mbstring \
+	--enable-shmop \
+	--enable-sockets \
+	--enable-sysvsem \
+	--enable-sysvshm \
+	--enable-libxml \
+	--enable-zip \
+	--disable-debug \
+	--disable-rpath \
+	--disable-cli \
+	--disable-ipv6 \
+	--disable-pdo \

@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+
+# chkconfig: 35 99 01
+# description: collector of monitoring data
+# processname: monit
+# Short-Description: eMonClient, collects monitoring data
+
+# Source function library.
+. /etc/init.d/functions
+
+### Default variables
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/bin/php-fpm
+CHROOT=/srv/chroot/chroot_name/
+DAEMON_OPTS="-y /etc/php-fpm.conf"
+NAME="php-fpm"
+DESC="php server"
+PID=$CHROOT/var/run/php-fpm.pid
+EXEC="/usr/sbin/chroot $CHROOT $DAEMON"
+
+test -x $CHROOT$DAEMON || {
+ echo "$DAEMON not installed";
+ if [ "$1" = "stop" ]; then exit 0; else exit 5; fi;
+}
+
+RETVAL=0
+
+set -e
+
+start() {
+	echo -n $"Starting $NAME: "
+	$EXEC $DAEMON_OPTS
+	echo
+}
+
+stop() {
+	echo -n $"Shutting down $NAME: "
+	killproc $NAME
+	echo
+}
+
+restart() {
+	stop
+	start
+}
+
+#reload() {
+#	echo -n $"Reloading $NAME: "
+#	monit -c "$CONFIG" reload
+#}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	restart
+	;;
+#  reload)
+#	reload
+#	;;
+# condrestart)
+#	[ -e /var/lock/subsys/$prog ] && restart
+#	RETVAL=$?
+#	;;
+#  status)
+#	status $prog
+#	RETVAL=$?
+#	;;
+  *)
+	echo $"Usage: $0 {start|stop|restart|reload|condrestart|status}"
+	RETVAL=1
+esac
+
+exit $RETVAL

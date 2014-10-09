@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+
+# chkconfig: 35 99 01
+# description: fast and reliable proxy server (varnish)
+# processname: varnish
+# Short-Description: proxy server varnsih
+
+# Source function library.
+. /etc/init.d/functions
+
+### Default variables
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/bin/varnish
+CHROOT=/srv/chroot/varnish/
+NAME="varnish"
+DESC="proxy server"
+PID=$CHROOT/var/run/nginx.pid
+EXEC="/usr/sbin/chroot $CHROOT $DAEMON"
+DAEMON_OPTS="-f /etc/varnish/default.vcl -s malloc,256M -T 127.0.0.1:2000 -a 0.0.0.0:80"
+
+test -x $CHROOT$DAEMON || {
+ echo "$DAEMON not installed";
+ if [ "$1" = "stop" ]; then exit 0; else exit 5; fi;
+}
+
+RETVAL=0
+
+set -e
+
+start() {
+	echo -n $"Starting $NAME: "
+	$EXEC $DAEMON_OPTS
+	echo
+}
+
+stop() {
+	echo -n $"Shutting down $NAME: "
+	killproc $NAME
+	echo
+}
+
+restart() {
+	stop
+	start
+}
+
+#reload() {
+#	echo -n $"Reloading $NAME: "
+#	monit -c "$CONFIG" reload
+#}
+
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	restart
+	;;
+#  reload)
+#	reload
+#	;;
+# condrestart)
+#	[ -e /var/lock/subsys/$prog ] && restart
+#	RETVAL=$?
+#	;;
+#  status)
+#	status $prog
+#	RETVAL=$?
+#	;;
+  *)
+	echo $"Usage: $0 {start|stop|restart|reload|condrestart|status}"
+	RETVAL=1
+esac
+
+exit $RETVAL

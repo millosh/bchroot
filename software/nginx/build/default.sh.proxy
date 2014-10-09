@@ -1,0 +1,30 @@
+### exec_path = /sbin/nginx
+./configure \
+	--with-cpu-opt=amd64 \
+	--prefix=/srv/build/nginx \
+	--with-http_geoip_module \
+	--with-http_gzip_static_module \
+	--with-http_ssl_module \
+	--with-http_stub_status_module \
+	--without-http_autoindex_module \
+	--without-http_browser_module \
+	--without-http_geo_module \
+	--without-http_limit_req_module \
+	--without-http_limit_conn_module \
+	--without-http_map_module \
+	--without-http_memcached_module \
+	--without-http_referer_module \
+	--without-http_scgi_module \
+	--without-http_split_clients_module \
+	--without-http_ssi_module \
+	--without-http_upstream_ip_hash_module \
+	--without-http_userid_module \
+	--without-http_uwsgi_module \
+	--conf-path=/etc/nginx.conf \
+	--pid-path=/var/run/nginx.pid \
+	--lock-path=/var/run/nginx.lock \
+	--http-log-path=/logs/access.log \
+	--error-log-path=/logs/error.log \
+	--http-client-body-temp-path=/tmp/body/ \
+	--http-proxy-temp-path=/tmp/proxy_temp/ \
+
