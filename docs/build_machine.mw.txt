@@ -1,0 +1,102 @@
+To be able to build, you'll need properly configured build machine. It's likely that I don't need to tell you what you should do, but it's the beginning of my effort to create documentation in that way, so people with less knowledge would be able to use it.
+
+== The system ==
+
+I am using Debian. This tool is working on lenny, squeeze, wheezy and jessie. The last one is not yet stable, while the first two are too old. Thus, at this moment, the documentation refers to wheezy.
+
+I am sure that this could be done on any contemporary GNU/Linux distribution. However, here are my notes:
+* I don't think that you'd have problems doing this on Gentoo or Arch. However, if you go that way, you are on your own and I'd like to read your input.
+* I had a lot of problems with dependencies on RedHat and RedHat-based systems. I was enthusiastic, but it didn't work. It's likely that you should be quite competent in RH to find all dependecies for building PHP on current stable version of RedHat or CentOS, for example.
+* SuSE should work, though I didn't test.
+
+File sources.list from my system for building the software is in this directory named "sources-triangulum-20141013.list". It's pretty plain, nothing especially has been added.
+
+The output of the command "dpkg --get-selections | grep -v deinstall | awk '{print $1}'" from my system used for building software is inside of the file "from my system used for building software from my system used for building the software is inside of the file "packages-triangulum-20141013.list". To deploy those packages on your system, you'll need to run "apt-get install --reinstall $(cat packages-triangulum-20141013.list)"
+
+I used that system to build nginx, php and varnish. It's likely that you'll need some other dev packages if you want to build something else.
+
+== How to find packages ==
+
+Install the minimal Debian stable system inside virtual machine. I installed minimal system with SSH server, without any other tool. This is useful, as we'll find exactly what do we need for one build system.
+
+Edit /etc/apt/sources.list and add " contrib non-free" after the "main" in all lines.
+
+Then we need to update repositories.
+# apt-get update
+
+Now, we need to make our life a bit easier...
+# apt-get -y install screen vim-nox links gpm virtualbox-guest-additions
+
+* screen: it's always better to use screen than not to use it :)
+* vim-nox: you need a decent editor; i like vim because of syntax highliting :P
+* links: besides wget, it's useful to have an interactive web browser, as well
+* gpm, virtualbox-guest-additions: you need copy-paste, as well
+
+We are ready now to download PHP.
+* links http://php.net (find downloads page and download the latest PHP in .tar.bz2 format)
+
+[tar xf...]
+
+In other words, system told us that we don't have bzip2.
+# apt-get -y install bzip2
+
+Now we can try to untar the package again:
+# tar...
+
+So we can go into PHP directory:
+# ...
+
+We can now start ./configure:
+# ./configure
+...
+
+We were, in fact, lucky that we installed virtualbox-guest-additions, which installed compiler and gnu make toolchain, among other useful programs and libraries. So, we don't need libxml2.
+
+To search which package should be installed so we could have libxml2, we need to ask "apt-cache":
+# apt-cache search libxml2
+
+...
+
+
+And we got so many packages and we need just one. Program "grep" is useful in such situations. We need a package which starts with "^lib".
+# apt-cache search libxml2 | grep "^lib"
+
+...
+
+Obviously, there are packages called "libxml2" and "libxml2-dev". So, we should install it.
+
+# apt-get install libxml2 libxml2-dev
+
+After the installation, it's time to run "./configure" again.
+# ./configure
+...
+
+And we are done.
+
+But, it was too easy. We need something more complex, of course. Let's try with the script "php-configure.sh" from this directory.
+# sh php-configure.sh
+
+We don't have OpenSSL.
+# apt-cache search openssl | grep "^lib"
+# apt-get install libssl1.0.0 libssl-dev
+
+Then the script again...
+# sh php-configure.sh
+...
+
+Oh, we still don't have OpenSSL! But we have it...
+
+In the row above configure told us that we actually don't have "pkg-config". Let's find it
+
+# apt-cache search pkg-config
+
+And there is package "pkg-config". Thus, apt-get install...
+
+# sh php-configure.sh
+
+And we are finally done. Note that you'd probably have more work without Virtualbox additions installed.
+
+So, you've prepared the system for compiling PHP. Nginx is much simpler, as well as Varnish is.
+
+You can now continue with ./build-chroot.py --help.
+
