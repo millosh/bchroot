@@ -50,7 +50,7 @@ We can now start ./configure:
 # ./configure
 ...
 
-We were, in fact, lucky that we installed virtualbox-guest-additions, which installed compiler and gnu make toolchain, among other useful programs and libraries. So, we don't need libxml2.
+We were, in fact, lucky that we installed virtualbox-guest-additions, which installed compiler and gnu make toolchain, among other useful programs and libraries. So, we don't have libxml2.
 
 To search which package should be installed so we could have libxml2, we need to ask "apt-cache":
 # apt-cache search libxml2
